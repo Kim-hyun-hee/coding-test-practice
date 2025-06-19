@@ -3,15 +3,24 @@ using System.Linq;
 
 public class Solution {
     public string solution(string s, string skip, int index) {
-        string remain = new string("abcdefghijklmnopqrstuvwxyz".Where(x => !skip.Contains(x)).ToArray());
-        var answer = string.Empty;
-    
-        foreach (var c in s)
-        {
-            int i = (remain.IndexOf(c) + index) % remain.Length;
-            answer += remain[i];
-        }
-    
-        return answer;
+        string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            string remain = string.Empty;
+            foreach (char c in alphabet)
+            {
+                if (!skip.Contains(c))
+                {
+                    remain = remain + $"{c}";
+                }
+            }
+
+            string answer = string.Empty;
+
+            foreach (char c in s)
+            {
+                var i = (remain.IndexOf(c) + index) % remain.Length;
+                answer += remain[i];
+            }
+
+            return answer;
     }
 }
