@@ -1,11 +1,25 @@
 import os
+import subprocess
 from datetime import datetime
 
-BASE_DIR = "프로그래머스" 
+BASE_DIR = "프로그래머스"
 README_PATH = "README.md"
 
 START_TAG = "<!-- START_AUTOGEN -->"
 END_TAG = "<!-- END_AUTOGEN -->"
+
+def get_git_commit_date(filepath):
+    try:
+        result = subprocess.run(
+            ["git", "log", "-1", "--format=%ad", "--date=short", "--", filepath],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return "날짜 없음"
 
 def extract_programmers_problems():
     entries = {}
@@ -25,15 +39,17 @@ def extract_programmers_problems():
 
             problem_name = problem_folder.split(". ", 1)[1] if ". " in problem_folder else problem_folder
             rel_path = os.path.join("프로그래머스", level_folder, problem_folder, "README.md").replace("\\", "/")
-            file_dates = []
+
+            commit_dates = []
             for file in os.listdir(problem_path):
                 if file.endswith(".cs"):
-                    full_path = os.path.join(problem_path, file)
-                    file_dates.append(os.path.getmtime(full_path))
-            
-            if file_dates:
-                timestamp = min(file_dates)  # 가장 오래된 C# 파일 기준
-                modified_time = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+                    full_path = os.path.join(BASE_DIR, level_folder, problem_folder, file)
+                    commit_date = get_git_commit_date(full_path)
+                    if commit_date != "날짜 없음":
+                        commit_dates.append(commit_date)
+
+            if commit_dates:
+                modified_time = min(commit_dates)  # 가장 오래된 커밋 기준
             else:
                 modified_time = "날짜 없음"
 
@@ -65,14 +81,3 @@ def update_readme(entries):
     before = content.split(START_TAG)[0]
     after = content.split(END_TAG)[1]
     middle = build_problem_list(entries)
-
-    new_content = f"{before}{START_TAG}\n{middle}\n{END_TAG}{after}"
-
-    with open(README_PATH, "w", encoding="utf-8") as f:
-        f.write(new_content)
-
-    print("✅ README.md 자동 업데이트 완료!")
-
-if __name__ == "__main__":
-    data = extract_programmers_problems()
-    update_readme(data)
