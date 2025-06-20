@@ -24,7 +24,7 @@ def extract_programmers_problems():
                 continue
 
             problem_name = problem_folder.split(". ", 1)[1] if ". " in problem_folder else problem_folder
-            rel_path = os.path.join(level_folder, problem_folder, "README.md").replace("\\", "/")
+            rel_path = os.path.join("프로그래머스", level_folder, problem_folder, "README.md").replace("\\", "/")
             modified_time = datetime.fromtimestamp(os.path.getmtime(problem_path)).strftime("%Y-%m-%d")
 
             entries[level_name].append((problem_name, rel_path, modified_time))
