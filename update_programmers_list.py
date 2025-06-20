@@ -11,13 +11,13 @@ END_TAG = "<!-- END_AUTOGEN -->"
 def get_git_commit_date(filepath):
     try:
         result = subprocess.run(
-            ["git", "log", "-1", "--format=%ad", "--date=short", "--", filepath],
+            ["git", "log", "--reverse", "--format=%ad", "--date=short", "--", filepath],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             check=True
         )
-        return result.stdout.strip()
+        return result.stdout.strip().splitlines()[0]
     except subprocess.CalledProcessError:
         return "날짜 없음"
 
