@@ -1,0 +1,30 @@
+name: 자동 README 갱신 (프로그래머스)
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 매일 자정 UTC = 한국 시간 오전 9시
+  workflow_dispatch:      # 수동 실행도 가능하게 설정
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ✅ 코드 체크아웃
+        uses: actions/checkout@v3
+
+      - name: 🐍 Python 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13.5'
+
+      - name: 🔁 README 생성 스크립트 실행
+        run: python update_programmers_readme.py
+
+      - name: 💾 변경사항 커밋 및 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 프로그래머스/README.md
+          git diff --cached --quiet || git commit -m "🤖 자동 README 갱신"
+          git push
