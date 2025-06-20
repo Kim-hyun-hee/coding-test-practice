@@ -1,5 +1,5 @@
 # coding-test-practice
-This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).  
 The README is regenerated daily using GitHub Actions and a custom Python script.
 
 <!-- START_AUTOGEN -->
