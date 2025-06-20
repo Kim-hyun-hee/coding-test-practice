@@ -1,8 +1,7 @@
 import os
 from datetime import datetime
 
-BASE_DIR = "프로그래머스"
-README_PATH = os.path.join(BASE_DIR, "README.md")
+README_PATH = "README.md"
 
 START_TAG = "<!-- START_AUTOGEN -->"
 END_TAG = "<!-- END_AUTOGEN -->"
