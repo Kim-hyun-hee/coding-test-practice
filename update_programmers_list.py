@@ -45,7 +45,7 @@ def extract_programmers_problems():
                 if file.endswith(".cs"):
                     full_path = os.path.join(BASE_DIR, level_folder, problem_folder, file)
                     commit_date = get_git_commit_date(full_path)
-                    print(f"📁 검사 중: {full_path} → commit_date = {commit_date}")
+                    print(f"::notice 📁 검사 중: {full_path} → commit_date = {commit_date}")
                     if commit_date != "날짜 없음":
                         commit_dates.append(commit_date)
 
