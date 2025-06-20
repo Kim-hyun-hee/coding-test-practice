@@ -19,7 +19,7 @@ jobs:
           python-version: '3.13.5'
 
       - name: 🔁 README 생성 스크립트 실행
-        run: python update_programmers_readme.py
+        run: python update_programmers_list.py
 
       - name: 💾 변경사항 커밋 및 푸시
         run: |
