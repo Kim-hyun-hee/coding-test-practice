@@ -25,7 +25,17 @@ def extract_programmers_problems():
 
             problem_name = problem_folder.split(". ", 1)[1] if ". " in problem_folder else problem_folder
             rel_path = os.path.join("프로그래머스", level_folder, problem_folder, "README.md").replace("\\", "/")
-            modified_time = datetime.fromtimestamp(os.path.getmtime(problem_path)).strftime("%Y-%m-%d")
+            file_dates = []
+            for file in os.listdir(problem_path):
+                if file.endswith(".cs"):
+                    full_path = os.path.join(problem_path, file)
+                    file_dates.append(os.path.getmtime(full_path))
+            
+            if file_dates:
+                timestamp = min(file_dates)  # 가장 오래된 C# 파일 기준
+                modified_time = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+            else:
+                modified_time = "날짜 없음"
 
             entries[level_name].append((problem_name, rel_path, modified_time))
 
