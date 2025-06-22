@@ -1,45 +1,63 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Solution {
-    public int solution(int n, int[,] q, int[] ans) {
-        int result = 0;
+    public int solution(int n, int[,] q, int[] ans)
+        {
+            int answer = 0;
 
-        int[] compare;
-        for(int i = 0; i < n - 4; i++) {
-            for(int j = i + 1; j < n - 3; j++) {
-                for(int k = j + 1; k < n - 2; k++) {
-                    for(int l = k + 1; l < n - 1; l++) {
-                        for(int m = l + 1; m < n; m++) {
-                            compare = new int[] { i + 1, j + 1, k + 1, l + 1, m + 1 };
+            var list = new List<int>();
+            for (int i = 1; i <= n; i++)
+            {
+                list.Add(i);
+            }
 
-                            bool isClear = true;
-                            for(int a = 0; a < q.GetLength(0); a++) {
-                                int answer = ans[a];
-
-                                int count = 0;
-                                for(int b = 0; b < 5; b++) {
-                                    if(compare.Contains(q[a, b])) {
-                                        count++;
-                                    }
-                                }
-
-                                if(answer != count) {
-                                    isClear = false;
-
-                                    break;
-                                }
-                            }
-
-                            if(isClear) {
-                                result++;
-                            }
-                        }
+            var c = Combinations(list, 5).ToArray();
+            for (int i = 0; i < c.Count(); i++)
+            {
+                bool pass = true;
+                for (int j = 0; j < q.GetLength(0); j++)
+                {
+                    int a = 0;
+                    if (c[i].Contains(q[j, 0])) a++;
+                    if (c[i].Contains(q[j, 1])) a++;
+                    if (c[i].Contains(q[j, 2])) a++;
+                    if (c[i].Contains(q[j, 3])) a++;
+                    if (c[i].Contains(q[j, 4])) a++;
+                    if (ans[j] != a)
+                    {
+                        pass = false;
+                        break;
                     }
+                }
+
+                if (pass) answer++;
+
+            }
+
+            return answer;
+        }
+
+        public IEnumerable<List<int>> Combinations(List<int> items, int r)
+        {
+            var queue = new Queue<(int start, List<int> current)>();
+            queue.Enqueue((0, new List<int>()));
+
+            while (queue.Count > 0)
+            {
+                var (start, current) = queue.Dequeue();
+                if (current.Count == r)
+                {
+                    yield return current;
+                    continue;
+                }
+
+                for (int i = start; i < items.Count; i++)
+                {
+                    var next = new List<int>(current) { items[i] };
+                    queue.Enqueue((i + 1, next));
                 }
             }
         }
-
-        return result;
-    }
 }
