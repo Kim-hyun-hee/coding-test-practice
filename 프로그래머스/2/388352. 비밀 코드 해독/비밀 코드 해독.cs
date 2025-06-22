@@ -13,25 +13,24 @@ public class Solution {
                 list.Add(i);
             }
 
-            var c = Combinations(list, 5).ToArray();
-            for (int i = 0; i < c.Count(); i++)
+            var c = Combinations(list, 5);
+            foreach (var cc in c)
             {
                 bool pass = true;
                 for (int j = 0; j < q.GetLength(0); j++)
                 {
                     int a = 0;
-                    if (c[i].Contains(q[j, 0])) a++;
-                    if (c[i].Contains(q[j, 1])) a++;
-                    if (c[i].Contains(q[j, 2])) a++;
-                    if (c[i].Contains(q[j, 3])) a++;
-                    if (c[i].Contains(q[j, 4])) a++;
+                    if (cc.Contains(q[j, 0])) a++;
+                    if (cc.Contains(q[j, 1])) a++;
+                    if (cc.Contains(q[j, 2])) a++;
+                    if (cc.Contains(q[j, 3])) a++;
+                    if (cc.Contains(q[j, 4])) a++;
                     if (ans[j] != a)
                     {
                         pass = false;
                         break;
                     }
                 }
-
                 if (pass) answer++;
 
             }
