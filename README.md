@@ -4,6 +4,7 @@ The README is regenerated daily using GitHub Actions and a custom Python script.
 
 <!-- START_AUTOGEN -->
 ## Level 1
+- [159994. 카드 뭉치](프로그래머스/1/159994. 카드 뭉치/README.md) <sub>2025-06-27</sub>
 - [389478. 택배 상자 꺼내기](프로그래머스/1/389478. 택배 상자 꺼내기/README.md) <sub>2025-06-20</sub>
 - [155652. 둘만의 암호](프로그래머스/1/155652. 둘만의 암호/README.md) <sub>2025-06-19</sub>
 
